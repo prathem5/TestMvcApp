@@ -1,0 +1,72 @@
+﻿@model IEnumerable<TestMvcApp.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+<p>
+    <input type="button" id="create" value="Create" class="btn btn-default" />
+
+</p>
+<table class="table" style="height:400px;overflow-y:scroll">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        int id = item.UserID;
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+        <a id="edit" onclick="EditUser(@id)">Edit</a> |
+        @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+    </td>
+</tr>
+    }
+
+</table>
+</hr>
+<div id="showResults">
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+
+    $('#create').click(function () {
+        $('#showResults').load("/User/Create");
+    })
+    var EditUser = function (userId) {
+        var url = "User/Edit?UserID=" + userId;
+        $('#showResults').load(url);
+    }
+
+</script>
+    }
